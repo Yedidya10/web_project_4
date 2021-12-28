@@ -1,0 +1,11 @@
+.popup__text {
+  width: 100%;
+  min-height: 27px;
+  margin-bottom: 30px;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  border-top: none;
+  border-inline: none;
+  border-bottom: rgba(0, 0, 0, .2) solid 1px;
+}

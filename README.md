@@ -1,16 +1,9 @@
 # Project 4: Around The U.S.
 
-### Overview
+**Website Summary:**
+This is a project that showcases images of places around The U.S.
+https://yedidya10.github.io/web_project_4/
 
-* Figma
-* Images
-
-**Figma**
-
-* [Link to the project in Figma](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
-
-**Images**
-
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-
-Have fun with JavaScript!
+**Website dev description:**
+The responsive website includes HTML , CSS and JS languages.
+The site is built according to the BEM methodology.
