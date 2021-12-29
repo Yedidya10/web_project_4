@@ -1,42 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="pages/index.css" />
     <title>Around The U.S.</title>
   </head>
   <body class="page">
     <div class="popup">
-      <div class="popup__container">'
-        <button class="button popup__close">
-          <img src="images/x-icon.svg" alt="close">
+      <div class="popup__container">
+        '
+        <button type="button" class="button popup__close">
+          <img src="images/x-icon.svg" alt="close" />
         </button>
         <form>
           <h2 class="popup__title">Edit profile</h2>
           <label for="name"></label>
-          <input id="name" class="popup__text" type="text" name="name" placeholder="Name" required>
+          <input
+            id="name"
+            class="popup__text"
+            type="text"
+            name="name"
+            placeholder="Name"
+            required
+          />
           <label for="about-me"></label>
-          <input id="about-me" class="popup__text" type="text" name="about-me" placeholder="About me" required>
-          <input class="popup__submit" type="submit" value="Save">
+          <input
+            id="about-me"
+            class="popup__text"
+            type="text"
+            name="about-me"
+            placeholder="About me"
+            required
+          />
+          <input class="popup__submit" type="submit" value="Save" />
         </form>
       </div>
     </div>
     <header class="header">
-      <img class="logo" src="images/logo.svg" alt="logo: Around The U.S.">
+      <img class="logo" src="images/logo.svg" alt="logo: Around The U.S." />
     </header>
     <main class="content">
       <section class="profile">
-        <img class="profile__image" src="images/profile-image.jpg" alt="profile image" />
+        <img
+          class="profile__image"
+          src="images/profile-image.jpg"
+          alt="profile image"
+        />
         <div class="profile__info">
           <p class="profile__name">Jacques Cousteau</p>
           <p class="profile__about-me">Explorer</p>
-          <button class="button profile__edit">
+          <button type="button" class="button profile__edit">
             <img src="images/edit-icon.svg" alt="edit icon" />
           </button>
         </div>
-        <button class="button profile__add-card">
+        <button type="button" class="button profile__add-card">
           <img src="images/x-icon.svg" alt="add" />
         </button>
       </section>
@@ -49,8 +68,7 @@
           />
           <div class="card__details">
             <p class="card__name">Yosemite Valley</p>
-            <button class="button card__icon">
-            </button>
+            <button type="button" class="button card__icon"></button>
           </div>
         </li>
         <li class="card">
@@ -61,9 +79,7 @@
           />
           <div class="card__details">
             <p class="card__name">Lake Louise</p>
-            <button class="button card__icon">
-
-            </button>
+            <button type="button" class="button card__icon"></button>
           </div>
         </li>
         <li class="card">
@@ -74,18 +90,14 @@
           />
           <div class="card__details">
             <p class="card__name">Bald Mountains</p>
-            <button class="button card__icon">
-
-            </button>
+            <button type="button" class="button card__icon"></button>
           </div>
         </li>
         <li class="card">
           <img class="card__image" src="images/Latemar.png" alt="Latemar" />
           <div class="card__details">
             <p class="card__name">Latemar</p>
-            <button class="button card__icon">
-
-            </button>
+            <button type="button" class="button card__icon"></button>
           </div>
         </li>
         <li class="card">
@@ -96,9 +108,7 @@
           />
           <div class="card__details">
             <p class="card__name">Vanoise National Park</p>
-            <button class="button card__icon">
-
-            </button>
+            <button type="button" class="button card__icon"></button>
           </div>
         </li>
         <li class="card">
@@ -109,17 +119,13 @@
           />
           <div class="card__details">
             <p class="card__name">Lago di Braies</p>
-            <button class="button card__icon">
-
-            </button>
+            <button type="button" class="button card__icon"></button>
           </div>
         </li>
       </ul>
     </main>
     <footer class="footer">
-      <p class="footer__author">
-        © 2021 Yedidya Averjel
-      </p>
+      <p class="footer__author">© 2021 Yedidya Averjel</p>
     </footer>
     <script src="script.js"></script>
   </body>
