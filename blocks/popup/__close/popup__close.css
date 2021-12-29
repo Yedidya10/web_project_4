@@ -2,8 +2,8 @@
   width: 40px;
   height: 40px;
   position: absolute;
-  top: -30px;
-  right: -30px;
+  top: -35px;
+  right: -35px;
   transform: rotate(-45deg);
   transition: .5s ease;
 }
@@ -12,7 +12,6 @@
   .popup__close {
     width: 26px;
     height: 26px;
-    top: -30px;
     right: 0px;
   }
 }
