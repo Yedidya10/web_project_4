@@ -1,15 +1,17 @@
-let editProfileButton = document.querySelector('.profile__edit');
 let popup = document.querySelector('.popup');
+let editProfile = popup.querySelector('.edit-profile-form');
+let editProfileButton = document.querySelector('.profile__edit');
 let closePopupButton = popup.querySelector('.popup__close');
 
 let profileName = document.querySelector('.profile__name');
 let aboutMe = document.querySelector('.profile__about-me');
+
 let nameInput = popup.querySelector('#name');
 let jobInput = popup.querySelector('#about-me');
 
 function getExistingInfo() {
-  nameInput.setAttribute("value", profileName.textContent);
-  jobInput.setAttribute("value", aboutMe.textContent);
+  nameInput.value;
+  jobInput.value;
 }
 
 function openPopup() {
@@ -32,4 +34,4 @@ function handleSubmitButton(e) {
   closePopup();
 }
 
-popup.addEventListener('submit', handleSubmitButton);
+editProfile.addEventListener('submit', handleSubmitButton);

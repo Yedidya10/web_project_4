@@ -6,9 +6,7 @@
   line-height: 22px;
   color: #ffffff;
   background: #000000;
-  border: none;
   border-radius: 2px;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
