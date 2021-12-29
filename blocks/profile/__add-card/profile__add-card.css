@@ -5,7 +5,9 @@
   align-self: center;
   background: none;
   border: #ffffff solid 2px;
+  border-radius: 2px;
   box-sizing: border-box;
+  transition: .3s ease;
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
@@ -16,5 +18,5 @@
 }
 
 .profile__add-card:hover {
-  opacity: .5;
+  opacity: .6;
 }

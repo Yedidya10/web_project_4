@@ -2,9 +2,9 @@
   display: grid;
   grid-template-columns: 120px auto 150px;
   column-gap: 30px;
-  min-height: 120px;
   padding-block: 36px 46px;
   color: #ffffff;
+  transition: .3s ease;
 }
 
 @media screen and (max-width: 767px) and (min-width: 320px) {
