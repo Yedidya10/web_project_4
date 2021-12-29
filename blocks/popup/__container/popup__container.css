@@ -6,7 +6,7 @@
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   box-sizing: border-box;
-  margin: 36px;
+  padding: 36px;
   background: #FFFFFF;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -17,6 +17,6 @@
   .popup__container {
     width: 282px;
     min-height: 322px;
-    margin: 19px;
+    padding: 19px;
   }
 }
