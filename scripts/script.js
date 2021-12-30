@@ -10,8 +10,8 @@ let nameInput = popup.querySelector('#name');
 let jobInput = popup.querySelector('#about-me');
 
 function getExistingInfo() {
-  nameInput.value;
-  jobInput.value;
+  nameInput.value = profileName.textContent;
+  jobInput.value = aboutMe.textContent;
 }
 
 function openPopup() {
