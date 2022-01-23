@@ -21,78 +21,29 @@
         <div class="profile__info">
           <h1 class="profile__name">Jacques Cousteau</h1>
           <p class="profile__about-me">Explorer</p>
-          <button aria-label="Edit Profile" type="button" class="button profile__edit">
+          <button aria-label="Edit Profile" type="button" class="button popup-button profile__edit">
             <img class="profile__edit-icon" src="images/edit-icon.svg" alt="edit icon" />
           </button>
         </div>
-        <button aria-label="Add Card" type="button" class="button profile__add-card">
+        <button aria-label="Add Card" type="button" class="button popup-button profile__add-card">
           <img src="images/x-icon.svg" alt="add" />
         </button>
       </section>
-      <section class="">
+      <section>
         <ul class="cards">
-          <li class="card">
-            <img
-              class="card__image"
-              src="images/Yosemite-Valley.png"
-              alt="Yosemite Valley"
-            />
-            <div class="card__details">
-              <h2 class="card__name">Yosemite Valley</h2>
-              <button aria-label="Like" type="button" class="button card__icon"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              class="card__image"
-              src="images/Lake-Louise.png"
-              alt="Lake Louise"
-            />
-            <div class="card__details">
-              <h2 class="card__name">Lake Louise</h2>
-              <button aria-label="Like" type="button" class="button card__icon"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              class="card__image"
-              src="images/Bald-Mountains.png"
-              alt="Bald Mountains"
-            />
-            <div class="card__details">
-              <h2 class="card__name">Bald Mountains</h2>
-              <button aria-label="Like" type="button" class="button card__icon"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img class="card__image" src="images/Latemar.png" alt="Latemar" />
-            <div class="card__details">
-              <h2 class="card__name">Latemar</h2>
-              <button aria-label="Like" type="button" class="button card__icon"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              class="card__image"
-              src="images/Vanoise-National-Park.png"
-              alt="Vanoise National Park"
-            />
-            <div class="card__details">
-              <h2 class="card__name">Vanoise National Park</h2>
-              <button aria-label="Like" type="button" class="button card__icon"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              class="card__image"
-              src="images/Lago-di-Braies.png"
-              alt="Lago di Braies"
-            />
-            <div class="card__details">
-              <h2 class="card__name">Lago di Braies</h2>
-              <button aria-label="Like" type="button" class="button card__icon"></button>
-            </div>
-          </li>
+          <template id="card-template">
+            <li class="card">
+              <button aria-label="trash" type="button" class="button card__trash"></button>
+                <img
+                  class="card__image"
+                  src=""
+                />
+              <div class="card__details">
+                <h2 class="card__name"></h2>
+                <button aria-label="Like" type="button" class="button card__like"></button>
+              </div>
+            </li>
+          </template>
         </ul>
       </section>
     </main>
@@ -101,14 +52,14 @@
     </footer>
     <div class="popup">
       <div class="popup__container">
-        <button aria-label="Close" type="button" class="button popup__close">
+        <button aria-label="close" type="button" class="button popup__close">
           <img class="popup__close-icon" src="images/x-icon.svg" alt="close" />
         </button>
-        <form name="edit-profile-form" class="edit-profile-form">
-          <h2 class="edit-profile-form__title">Edit profile</h2>
+        <form name="edit-profile-form" class="form" id="edit-profile-form">
+          <h2 class="form__title">Edit profile</h2>
           <input
             id="name"
-            class="edit-profile-form__text"
+            class="form__text"
             type="text"
             name="name"
             placeholder="Name"
@@ -116,13 +67,33 @@
           />
           <input
             id="about-me"
-            class="edit-profile-form__text"
+            class="form__text"
             type="text"
             name="about-me"
             placeholder="About me"
             required
           />
-          <button class="button edit-profile-form__submit" name="submit">Save</button>
+          <button class="button form__submit" name="submit">Save</button>
+        </form>
+        <form name="add-place-form" class="form" id="add-place-form">
+          <h2 class="form__title">New place</h2>
+          <input
+            id="title"
+            class="form__text"
+            type="text"
+            name="title"
+            placeholder="Title"
+            required
+          />
+          <input
+            id="img-url"
+            class="form__text"
+            type="url"
+            name="img-url"
+            placeholder="Image link"
+            required
+          />
+          <button class="button form__submit" name="submit">Create</button>
         </form>
       </div>
     </div>

@@ -1,17 +1,12 @@
-.card__icon {
-  width: 23px;
+.card__like {
+  width: 25px;
   background-image: url("../../../images/like-icon.svg");
   background-repeat: no-repeat;
   background-position: center;
   transition:  .3s ease;
 }
 
-.card__icon:hover {
+.card__like:hover {
  opacity: .5;
-}
-
-.card__icon:active {
-  opacity: 1;
-  background-image: url("../../../images/like-blok.svg");
 }
 
