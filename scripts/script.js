@@ -50,10 +50,12 @@ function popupOpened() {
 }
 
 function closePopup() {
+  const imageDiv = popupContainer.querySelector(".image-popup");
   popup.classList.remove("popup_opened");
   for (let i = 0; i < form.length; i++) {
     form[i].classList.remove("form_active");
   }
+  imageDiv.remove();
 }
 
 closePopupButton.addEventListener("click", closePopup);
@@ -110,6 +112,7 @@ function imagePopupEvent(e) {
   const cardTitle = e.target.parentElement.querySelector(".card__name");
   const titleClon = cardTitle.cloneNode(true);
   popupOpened();
+  imagePopupDiv.classList.add("image-popup");
   imageClon.classList.add("card__image_popup");
   titleClon.classList.add("card__name_popup");
   popupContainer.append(imagePopupDiv);
