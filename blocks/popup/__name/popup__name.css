@@ -1,7 +1,10 @@
-.card__name_popup {
+.popup__name {
   margin-top: 10px;
   color: #fff;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
