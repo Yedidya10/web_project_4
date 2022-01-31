@@ -29,13 +29,10 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
 
-
 closePopupButtonList.forEach(element => {
   element.addEventListener("click", function() {
-    const popup = element.parentElement.parentElement;
-    if (popup.classList.contains("popup_opened")) {
-      popup.classList.remove("popup_opened");
-    }
+    const popup = element.closest('.popup');
+    closePopup(popup);
   });
 });
 
@@ -49,19 +46,18 @@ function setExistingInfo() {
   jobInput.value = aboutMe.textContent;
 }
 
-function handleSubmiteditProfil(e) {
+function handleSubmitedProfile(e) {
   e.preventDefault();
   profileName.textContent = nameInput.value;
   aboutMe.textContent = jobInput.value;
   closePopup(editProfilePopup);
 }
 
-editProfileForm.addEventListener("submit", handleSubmiteditProfil);
-
+editProfileForm.addEventListener("submit", handleSubmitedProfile);
 
 function runInitialCards() {
-  initialCards.forEach(object => {
-    const card = createCard(object);
+  initialCards.forEach(cardInfo => {
+    const card = createCard(cardInfo);
     renderCard(card);
   });
 }
@@ -91,16 +87,14 @@ function createCard(cardDeta) {
   cardElement.querySelector(".card__image").setAttribute("alt", cardDeta.name);
   cardElement.querySelector(".card__name").textContent = cardDeta.name;
   cardElement.querySelector(".card__image").addEventListener("click", openImagePopup);
+  setLikeButtonHandler(newCard);
+  setTrashButtonHandler(newCard);
   return cardElement;
 }
 
 function renderCard(newCard) {
   cards.prepend(newCard);
-  activeLikeCardBtn(newCard);
-  activeTrashCardBtn(newCard);
 }
-
-
 
 function openImagePopup(e) {
   const imageUrl = e.target.getAttribute("src");
@@ -112,17 +106,15 @@ function openImagePopup(e) {
   imageCls.setAttribute("alt", imageAlt);
   nameCls.textContent = name;
 }
-closePopup(imagePopup);
 
-function activeLikeCardBtn(newCard) {
+function setLikeButtonHandler(newCard) {
   const cardLike = newCard.querySelector(".card__like");
   cardLike.addEventListener("click", function(e) {
     e.target.classList.toggle("card__like_active");
   });
 }
 
-
-function activeTrashCardBtn(newCard) {
+function setTrashButtonHandler(newCard) {
   const cardTrash = newCard.querySelector(".card__trash");
   cardTrash.addEventListener("click", function(e) {
     e.target.parentElement.remove();
