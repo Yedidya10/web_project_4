@@ -87,13 +87,13 @@ function createCard(cardDeta) {
   cardElement.querySelector(".card__image").setAttribute("alt", cardDeta.name);
   cardElement.querySelector(".card__name").textContent = cardDeta.name;
   cardElement.querySelector(".card__image").addEventListener("click", openImagePopup);
-  setLikeButtonHandler(newCard);
-  setTrashButtonHandler(newCard);
+  setLikeButtonHandler(cardElement);
+  setTrashButtonHandler(cardElement);
   return cardElement;
 }
 
-function renderCard(newCard) {
-  cards.prepend(newCard);
+function renderCard(cardElement) {
+  cards.prepend(cardElement);
 }
 
 function openImagePopup(e) {
