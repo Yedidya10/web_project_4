@@ -1,5 +1,6 @@
-
 const closePopupButtonList = document.querySelectorAll(".popup__close");
+
+const popupList = Array.from(document.querySelectorAll(".popup"));
 
 const editProfileButton = document.querySelector(".profile__edit");
 const editProfilePopup = document.querySelector("#edit-profile-popup");
@@ -21,41 +22,50 @@ const nameCls = imagePopup.querySelector(".popup__name");
 
 const cards = document.querySelector(".cards");
 
-
 function openPopup(popup) {
   popup.classList.add("popup_opened");
 }
 
+function handleClosePopup(evt) {
+  popupList.forEach((popupElement) => {
+    if (popupElement.classList.contains("popup_opened")) {
+      if (evt.target == evt.currentTarget) {
+        closePopup(popupElement);
+      }
+    }
+  });
+}
+
 function handleEscapePopupBtn() {
-  const popupList = Array.from(document.querySelectorAll(".popup"));
-  popupList.forEach(popupElement => {
+  popupList.forEach((popupElement) => {
     if (popupElement.classList.contains("popup_opened")) {
       closePopup(popupElement);
     }
   });
 }
 
-document.addEventListener("click", handleEscapePopupBtn);
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener("mousedown", handleClosePopup);
+});
 
-document.addEventListener("keydown", function(evt) {
+document.addEventListener("keydown", function (evt) {
   if (evt.key === "Escape") {
     handleEscapePopupBtn();
   }
-
 });
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
 
-closePopupButtonList.forEach(element => {
-  element.addEventListener("click", function() {
-    const popup = element.closest('.popup');
+closePopupButtonList.forEach((element) => {
+  element.addEventListener("click", function () {
+    const popup = element.closest(".popup");
     closePopup(popup);
   });
 });
 
-editProfileButton.addEventListener("click", function() {
+editProfileButton.addEventListener("click", function () {
   openPopup(editProfilePopup);
   setExistingInfo();
 });
@@ -71,7 +81,6 @@ const showInputError = (formElement, inputElement, errorMessage) => {
   errorElement.textContent = errorMessage;
   errorElement.classList.add("form__input-error_active");
   errorElement.style.cssText = "position: relative; top: -25px;";
-
 };
 
 const hideInputError = (formElement, inputElement) => {
@@ -98,8 +107,12 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add("form__submit_inactive");
+    editProfileForm.removeEventListener("submit", handleSubmitedProfile);
+    addPlaceForm.removeEventListener("submit", handleSubmitAddPlace);
   } else {
     buttonElement.classList.remove("form__submit_inactive");
+    editProfileForm.addEventListener("submit", handleSubmitedProfile);
+    addPlaceForm.addEventListener("submit", handleSubmitAddPlace);
   }
 };
 
@@ -133,31 +146,27 @@ function handleSubmitedProfile() {
   closePopup(editProfilePopup);
 }
 
-editProfileForm.addEventListener("submit", handleSubmitedProfile);
-
 function runInitialCards() {
-  initialCards.forEach(cardInfo => {
+  initialCards.forEach((cardInfo) => {
     const card = createCard(cardInfo);
     renderCard(card);
   });
 }
 runInitialCards();
 
-addPlaceButton.addEventListener("click", function() {
+addPlaceButton.addEventListener("click", function () {
   openPopup(addPlacePopup);
 });
 
 function handleSubmitAddPlace() {
   const addPlaceDeta = {
     name: titleInput.value,
-    link: urlInput.value
+    link: urlInput.value,
   };
   renderCard(createCard(addPlaceDeta));
   addPlaceForm.reset();
   closePopup(addPlacePopup);
 }
-
-addPlaceForm.addEventListener("submit", handleSubmitAddPlace);
 
 function createCard(cardDeta) {
   const cardTemplate = document.getElementById("card-template").content;
@@ -165,7 +174,9 @@ function createCard(cardDeta) {
   cardElement.querySelector(".card__image").setAttribute("src", cardDeta.link);
   cardElement.querySelector(".card__image").setAttribute("alt", cardDeta.name);
   cardElement.querySelector(".card__name").textContent = cardDeta.name;
-  cardElement.querySelector(".card__image").addEventListener("click", openImagePopup);
+  cardElement
+    .querySelector(".card__image")
+    .addEventListener("click", openImagePopup);
   setLikeButtonHandler(cardElement);
   setTrashButtonHandler(cardElement);
   return cardElement;
@@ -188,14 +199,14 @@ function openImagePopup(evt) {
 
 function setLikeButtonHandler(newCard) {
   const cardLike = newCard.querySelector(".card__like");
-  cardLike.addEventListener("click", function(evt) {
+  cardLike.addEventListener("click", function (evt) {
     evt.target.classList.toggle("card__like_active");
   });
 }
 
 function setTrashButtonHandler(newCard) {
   const cardTrash = newCard.querySelector(".card__trash");
-  cardTrash.addEventListener("click", function(evt) {
+  cardTrash.addEventListener("click", function (evt) {
     evt.target.parentElement.remove();
   });
 }
