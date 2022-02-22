@@ -54,24 +54,30 @@
         <button aria-label="close" type="button" class="button popup__close">
           <img class="popup__close-icon" src="images/x-icon.svg" alt="close" />
         </button>
-        <form name="edit-profile-form" id="edit-profile-form" class="form">
+        <form name="edit-profile-form" id="edit-profile-form" class="form" novalidate>
           <h2 class="form__title">Edit profile</h2>
           <input
             id="name"
-            class="form__text"
+            class="form__input"
             type="text"
             name="name"
             placeholder="Name"
+            minlength="2"
+            maxlength="40"
             required
           />
+          <span class="form__input-error name-error"></span>
           <input
             id="about-me"
-            class="form__text"
+            class="form__input"
             type="text"
             name="about-me"
             placeholder="About me"
+            minlength="2"
+            maxlength="200"
             required
           />
+          <span class="form__input-error about-me-error"></span>
           <button class="button form__submit" name="submit">Save</button>
         </form>
       </div>
@@ -81,24 +87,28 @@
         <button aria-label="close" type="button" class="button popup__close">
           <img class="popup__close-icon" src="images/x-icon.svg" alt="close" />
         </button>
-        <form name="add-place-form" id="add-place-form" class="form">
+        <form name="add-place-form" id="add-place-form" class="form" novalidate>
           <h2 class="form__title">New place</h2>
           <input
             id="title"
-            class="form__text"
+            class="form__input"
             type="text"
             name="title"
             placeholder="Title"
+            minlength="1"
+            maxlength="30"
             required
           />
+          <span class="form__input-error title-error"></span>
           <input
             id="img-url"
-            class="form__text"
+            class="form__input"
             type="url"
             name="img-url"
             placeholder="Image link"
             required
           />
+          <span class="form__input-error img-url-error"></span>
           <button class="button form__submit" name="submit">Create</button>
         </form>
       </div>
