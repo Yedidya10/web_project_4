@@ -144,6 +144,7 @@ function handleSubmitedProfile() {
   profileName.textContent = nameInput.value;
   aboutMe.textContent = jobInput.value;
   closePopup(editProfilePopup);
+  enableValidation();
 }
 
 function runInitialCards() {
@@ -166,6 +167,7 @@ function handleSubmitAddPlace() {
   renderCard(createCard(addPlaceDeta));
   addPlaceForm.reset();
   closePopup(addPlacePopup);
+  enableValidation();
 }
 
 function createCard(cardDeta) {
