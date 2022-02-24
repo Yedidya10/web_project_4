@@ -1,3 +1,5 @@
+import { settings, toggleButtonState } from "./validate.js";
+
 const popupList = Array.from(document.querySelectorAll(".popup"));
 const closePopupButtonList = document.querySelectorAll(".popup__close");
 
@@ -47,11 +49,11 @@ function handleEscapePopupBtn(evt) {
 function closeOpenedPopup() {
   const openedPopup = document.querySelector(".popup_opened");
   closePopup(openedPopup);
-  document.removeEventListener("keydown", handleEscapePopupBtn);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", handleEscapePopupBtn);
 }
 
 closePopupButtonList.forEach((closePopupButton) => {
@@ -62,8 +64,11 @@ closePopupButtonList.forEach((closePopupButton) => {
 });
 
 editProfileButton.addEventListener("click", function () {
+  const submitEditProfileFormBtb = editProfileForm.submit;
+  const inputList = Array.from(editProfileForm.querySelectorAll(settings.inputSelector));
   openPopup(editProfilePopup);
   fillProfileForm();
+  toggleButtonState(settings, inputList, submitEditProfileFormBtb);
 });
 
 function fillProfileForm() {
@@ -94,13 +99,15 @@ addPlaceButton.addEventListener("click", function () {
 addPlaceForm.addEventListener("submit", handleSubmittedAddPlace);
 
 function handleSubmittedAddPlace() {
-  const addPlaceFormSubmit = addPlaceForm.submit;
+  const submitaddPlaceFormBtn = addPlaceForm.submit;
+  const inputList = Array.from(addPlaceForm.querySelectorAll(settings.inputSelector));
   const addPlaceData = {
     name: titleInput.value,
     link: urlInput.value
   };
   renderCard(createCard(addPlaceData));
-  addPlaceForm.reset(addPlaceFormSubmit.setAttribute("disabled", ""), addPlaceFormSubmit.classList.add("form__submit_inactive"));
+  addPlaceForm.reset();
+  toggleButtonState(settings, inputList, submitaddPlaceFormBtn);
   closePopup(addPlacePopup);
 }
 

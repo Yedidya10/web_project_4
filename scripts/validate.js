@@ -1,3 +1,12 @@
+const settings = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit",
+  inactiveButtonClass: "form__submit_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active"
+};
+
 const showInputError = (settings, formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(settings.inputErrorClass);
@@ -37,7 +46,7 @@ const toggleButtonState = (settings, inputList, buttonElement) => {
   }
 };
 
-const setEventListeners = (settings, formElement) => {
+function setEventListeners (settings, formElement) {
   const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   const buttonElement = formElement.querySelector(settings.submitButtonSelector);
   toggleButtonState(settings, inputList, buttonElement);
@@ -60,11 +69,6 @@ function enableValidation(settings) {
   });
 }
 
-enableValidation({
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inactiveButtonClass: "form__submit_inactive",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active"
-});
+enableValidation(settings);
+
+export { settings, toggleButtonState };
