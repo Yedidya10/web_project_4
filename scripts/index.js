@@ -25,6 +25,7 @@ const cards = document.querySelector(".cards");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener("keydown", handleEscapePopupBtn);
 }
 
 popupList.forEach((popupElement) => {
@@ -33,22 +34,20 @@ popupList.forEach((popupElement) => {
 
 function handleMouseClosePopup(evt) {
   if (evt.target == evt.currentTarget) {
-    handleClosePopup();
+    closeOpenedPopup();
   }
 }
-
-document.addEventListener("keydown", handleEscapePopupBtn);
 
 function handleEscapePopupBtn(evt) {
   if (evt.key == "Escape") {
-    handleClosePopup();
-    document.removeEventListener("keydown", handleEscapePopupBtn);
+    closeOpenedPopup();
   }
 }
 
-function handleClosePopup() {
+function closeOpenedPopup() {
   const openedPopup = document.querySelector(".popup_opened");
   closePopup(openedPopup);
+  document.removeEventListener("keydown", handleEscapePopupBtn);
 }
 
 function closePopup(popup) {
@@ -65,7 +64,6 @@ closePopupButtonList.forEach((closePopupButton) => {
 editProfileButton.addEventListener("click", function () {
   openPopup(editProfilePopup);
   fillProfileForm();
-  enableValidation();
 });
 
 function fillProfileForm() {
@@ -96,12 +94,13 @@ addPlaceButton.addEventListener("click", function () {
 addPlaceForm.addEventListener("submit", handleSubmittedAddPlace);
 
 function handleSubmittedAddPlace() {
-  const addPlaceDeta = {
+  const addPlaceFormSubmit = addPlaceForm.submit;
+  const addPlaceData = {
     name: titleInput.value,
-    link: urlInput.value,
+    link: urlInput.value
   };
-  renderCard(createCard(addPlaceDeta));
-  addPlaceForm.reset();
+  renderCard(createCard(addPlaceData));
+  addPlaceForm.reset(addPlaceFormSubmit.setAttribute("disabled", ""), addPlaceFormSubmit.classList.add("form__submit_inactive"));
   closePopup(addPlacePopup);
 }
 
@@ -126,9 +125,9 @@ function openImagePopup(evt) {
   const imageAlt = evt.target.getAttribute("alt");
   const titleCard = evt.target.parentElement.querySelector(".card__name");
   const name = titleCard.textContent;
-  openPopup(imagePopup);
   cardPreviewImage.setAttribute("src", imageUrl);
   cardPreviewImage.setAttribute("alt", imageAlt);
+  openPopup(imagePopup);
   cardPreviewTitle.textContent = name;
 }
 
