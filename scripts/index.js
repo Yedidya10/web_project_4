@@ -64,11 +64,11 @@ closePopupButtonList.forEach((closePopupButton) => {
 });
 
 editProfileButton.addEventListener("click", function () {
-  const submitEditProfileFormBtb = editProfileForm.submit;
+  const submitEditProfileFormBtn = editProfileForm.submit;
   const inputList = Array.from(editProfileForm.querySelectorAll(settings.inputSelector));
   openPopup(editProfilePopup);
   fillProfileForm();
-  toggleButtonState(settings, inputList, submitEditProfileFormBtb);
+  toggleButtonState(settings, inputList, submitEditProfileFormBtn);
 });
 
 function fillProfileForm() {
