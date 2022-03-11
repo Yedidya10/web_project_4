@@ -21,11 +21,23 @@
         <div class="profile__info">
           <h1 class="profile__name">Jacques Cousteau</h1>
           <p class="profile__about-me">Explorer</p>
-          <button aria-label="Edit Profile" type="button" class="button popup-button profile__edit">
-            <img class="profile__edit-icon" src="images/edit-icon.svg" alt="edit icon" />
+          <button
+            aria-label="Edit Profile"
+            type="button"
+            class="button popup-button profile__edit"
+          >
+            <img
+              class="profile__edit-icon"
+              src="images/edit-icon.svg"
+              alt="edit icon"
+            />
           </button>
         </div>
-        <button aria-label="Add Card" type="button" class="button popup-button profile__add-card">
+        <button
+          aria-label="Add Card"
+          type="button"
+          class="button popup-button profile__add-card"
+        >
           <img src="images/x-icon.svg" alt="add" />
         </button>
       </section>
@@ -33,13 +45,19 @@
         <ul class="cards">
           <template id="card-template">
             <li class="card">
-              <button aria-label="trash" type="button" class="button card__trash"></button>
-                <img
-                  class="card__image"
-                />
+              <button
+                aria-label="trash"
+                type="button"
+                class="button card__trash"
+              ></button>
+              <img class="card__image" />
               <div class="card__details">
                 <h2 class="card__name"></h2>
-                <button aria-label="Like" type="button" class="button card__like"></button>
+                <button
+                  aria-label="Like"
+                  type="button"
+                  class="button card__like"
+                ></button>
               </div>
             </li>
           </template>
@@ -54,7 +72,12 @@
         <button aria-label="close" type="button" class="button popup__close">
           <img class="popup__close-icon" src="images/x-icon.svg" alt="close" />
         </button>
-        <form name="edit-profile-form" id="edit-profile-form" class="form" novalidate>
+        <form
+          name="edit-profile-form"
+          id="edit-profile-form"
+          class="form"
+          novalidate
+        >
           <h2 class="form__title">Edit profile</h2>
           <input
             id="name"
@@ -82,7 +105,7 @@
         </form>
       </div>
     </div>
-    <div  id="add-place-popup" class="popup">
+    <div id="add-place-popup" class="popup">
       <div class="popup__container">
         <button aria-label="close" type="button" class="button popup__close">
           <img class="popup__close-icon" src="images/x-icon.svg" alt="close" />
@@ -119,13 +142,16 @@
           <img class="popup__close-icon" src="images/x-icon.svg" alt="close" />
         </button>
         <div class="popup__image-warp">
-          <img class="popup__image">
+          <img class="popup__image" />
           <p class="popup__name"></p>
         </div>
       </div>
     </div>
-    <script src="scripts/data/cards.js"></script>
-    <script type="module" src="scripts/validate.js"></script>
+    <script type="module" src="scripts/data/domConst.js"></script>
+    <script type="module" src="scripts/data/cards.js"></script>
     <script type="module" src="scripts/index.js"></script>
+    <script type="module" src="scripts/utils.js"></script>
+    <script type="module" src="scripts/card.js"></script>
+    <script type="module" src="scripts/formValidator.js"></script>
   </body>
 </html>
