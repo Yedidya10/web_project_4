@@ -17,6 +17,8 @@ import { settings,
   urlInput,
   cards } from "./data/domConst.js";
 
+  const formValidator = new FormValidator(settings);
+
 editProfileButton.addEventListener("click", function () {
   const submitEditProfileFormBtn = editProfileForm.submit;
   const inputList = Array.from(
@@ -56,9 +58,9 @@ function handleSubmittedAddPlace() {
     link: urlInput.value,
   };
   const card = new Card(addPlaceData, ".card");
-  renderCard(card);
+  renderCard(card.createCard());
   addPlaceForm.reset();
-  FormValidator.toggleButtonState(inputList, submitaddPlaceFormBtn);
+  formValidator.toggleButtonState(inputList, submitaddPlaceFormBtn);
   closePopup(addPlacePopup);
 }
 
@@ -69,8 +71,7 @@ function renderCard(card) {
 function renderInitialCards() {
   initialCards.forEach((item) => {
     const card = new Card(item, ".card");
-    card.createCard();
-    renderCard(card)
+    renderCard(card.createCard());
   });
 }
 renderInitialCards();

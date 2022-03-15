@@ -12,14 +12,15 @@ export class Card {
   _getTemplate() {
     this._template = cardTemplate
       .querySelector(this._cardSelector)
-      .content.cloneNode(true);
+      .cloneNode(true);
     return this._template;
   }
 
   createCard() {
     this._cardElement = this._getTemplate();
-    this._cardElement.querySelector(".card__image").setAttribute("src", this._link);
-    this._cardElement.querySelector(".card__image").setAttribute("alt", this._name);
+    this._cardImage = this._cardElement.querySelector(".card__image");
+    this._cardImage.setAttribute("src", this._link);
+    this._cardImage.setAttribute("alt", this._name);
     this._cardElement.querySelector(".card__name").textContent = this._name;
 
     this._cardImage.addEventListener("click", openImagePopup);
@@ -28,6 +29,8 @@ export class Card {
 
     return this._cardElement;
   }
+
+  
 
   _setLikeButtonHandler() {
     this._handleLike = function (evt) {
