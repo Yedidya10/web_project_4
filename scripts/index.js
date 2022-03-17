@@ -1,8 +1,13 @@
 import { Card } from "./card.js";
 import { initialCards } from "./data/cards.js";
 import { FormValidator } from "./formValidator.js";
-import { openPopup, closePopup } from "./utils.js";
+import { openPopup, closePopup, handleMouseClosePopup } from "./utils.js";
 import { settings,
+  popupList,
+  closePopupButtonList,
+  imagePopup,
+  cardPreviewImage,
+  cardPreviewTitle,
   editProfileButton,
   editProfileForm,
   editProfilePopup,
@@ -13,20 +18,41 @@ import { settings,
   addPlaceButton,
   addPlacePopup,
   addPlaceForm,
+  formList,
   titleInput,
   urlInput,
   cards } from "./data/domConst.js";
 
-  const formValidator = new FormValidator(settings);
+
+const profileFormValidator = new FormValidator(settings, editProfileForm);
+const cardFormValidator = new FormValidator(settings, addPlaceForm);
+
+popupList.forEach((popupElement) => {
+  popupElement.addEventListener("mousedown", handleMouseClosePopup);
+});
+
+closePopupButtonList.forEach((closePopupButton) => {
+  closePopupButton.addEventListener("click", function () {
+    const popup = closePopupButton.closest(".popup");
+    closePopup(popup);
+  });
+});
+
+export function openImagePopup(evt) {
+  const imageUrl = evt.target.getAttribute("src");
+  const imageAlt = evt.target.getAttribute("alt");
+  const titleCard = evt.target.parentElement.querySelector(".card__name");
+  const name = titleCard.textContent;
+  cardPreviewImage.setAttribute("src", imageUrl);
+  cardPreviewImage.setAttribute("alt", imageAlt);
+  openPopup(imagePopup);
+  cardPreviewTitle.textContent = name;
+}
 
 editProfileButton.addEventListener("click", function () {
-  const submitEditProfileFormBtn = editProfileForm.submit;
-  const inputList = Array.from(
-    editProfileForm.querySelectorAll(settings.inputSelector)
-  );
   openPopup(editProfilePopup);
   fillProfileForm();
-  FormValidator.toggleButtonState(inputList, submitEditProfileFormBtn);
+  profileFormValidator.toggleButtonState;
 });
 
 function fillProfileForm() {
@@ -49,18 +75,14 @@ addPlaceButton.addEventListener("click", function () {
 addPlaceForm.addEventListener("submit", handleSubmittedAddPlace);
 
 function handleSubmittedAddPlace() {
-  const submitaddPlaceFormBtn = addPlaceForm.submit;
-  const inputList = Array.from(
-    addPlaceForm.querySelectorAll(settings.inputSelector)
-  );
   const addPlaceData = {
     name: titleInput.value,
     link: urlInput.value,
   };
   const card = new Card(addPlaceData, ".card");
   renderCard(card.createCard());
+  cardFormValidator.toggleButtonState;
   addPlaceForm.reset();
-  formValidator.toggleButtonState(inputList, submitaddPlaceFormBtn);
   closePopup(addPlacePopup);
 }
 
@@ -75,3 +97,8 @@ function renderInitialCards() {
   });
 }
 renderInitialCards();
+
+formList.forEach((form) => {
+  const formValidator = new FormValidator(settings, form);
+  formValidator.enableValidation();
+});
