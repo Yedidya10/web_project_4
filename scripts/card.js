@@ -1,7 +1,6 @@
 import { openImagePopup } from "./index.js";
 import { cardTemplate } from "./data/domConst.js";
 
-
 export class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
@@ -30,19 +29,21 @@ export class Card {
     return this._cardElement;
   }
 
+  _handleLike = (evt) => {
+    evt.target.classList.toggle("card__like_active");
+  };
+
   _setLikeButtonHandler() {
-    this._handleLike = (evt) => {
-      evt.target.classList.toggle("card__like_active");
-    };
     const cardLike = this._cardElement.querySelector(".card__like");
     cardLike.addEventListener("click", this._handleLike);
   }
 
+  _handleDelete = () => {
+    this._cardElement.remove();
+    this._cardElement = null;
+  };
+
   _setTrashButtonHandler() {
-    this._handleDelete = () => {
-      this._cardElement.remove();
-      this._cardElement = null;
-    }
     const trashButton = this._cardElement.querySelector(".card__trash");
     trashButton.addEventListener("click", this._handleDelete);
   }

@@ -2,7 +2,8 @@ import { Card } from "./card.js";
 import { initialCards } from "./data/cards.js";
 import { FormValidator } from "./formValidator.js";
 import { openPopup, closePopup, handleMouseClosePopup } from "./utils.js";
-import { settings,
+import {
+  settings,
   popupList,
   closePopupButtonList,
   imagePopup,
@@ -21,8 +22,8 @@ import { settings,
   formList,
   titleInput,
   urlInput,
-  cards } from "./data/domConst.js";
-
+  cards,
+} from "./data/domConst.js";
 
 const profileFormValidator = new FormValidator(settings, editProfileForm);
 const cardFormValidator = new FormValidator(settings, addPlaceForm);
@@ -52,7 +53,7 @@ export function openImagePopup(evt) {
 editProfileButton.addEventListener("click", function () {
   openPopup(editProfilePopup);
   fillProfileForm();
-  profileFormValidator.toggleButtonState;
+  profileFormValidator.toggleButtonState();
 });
 
 function fillProfileForm() {
@@ -81,7 +82,7 @@ function handleSubmittedAddPlace() {
   };
   const card = new Card(addPlaceData, ".card");
   renderCard(card.createCard());
-  cardFormValidator.toggleButtonState;
+  cardFormValidator.toggleButtonState();
   addPlaceForm.reset();
   closePopup(addPlacePopup);
 }
@@ -98,7 +99,5 @@ function renderInitialCards() {
 }
 renderInitialCards();
 
-formList.forEach((form) => {
-  const formValidator = new FormValidator(settings, form);
-  formValidator.enableValidation();
-});
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation();
