@@ -82,9 +82,10 @@ function handleSubmittedAddPlace() {
   };
   const card = new Card(addPlaceData, ".card");
   renderCard(card.createCard());
-  cardFormValidator.toggleButtonState();
   addPlaceForm.reset();
+  cardFormValidator.toggleButtonState();
   closePopup(addPlacePopup);
+
 }
 
 function renderCard(card) {
