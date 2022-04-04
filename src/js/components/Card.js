@@ -1,7 +1,6 @@
-import { openImagePopup } from "./index.js";
-import { cardTemplate } from "./data/domConst.js";
+import { cardTemplate } from "../utils/domConst.js";
 
-export class Card {
+export default class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
     this._link = data.link;
@@ -15,14 +14,14 @@ export class Card {
     return this._template;
   }
 
-  createCard() {
+  createCard = () => {
     this._cardElement = this._getTemplate();
     const cardImage = this._cardElement.querySelector(".card__image");
     cardImage.setAttribute("src", this._link);
     cardImage.setAttribute("alt", this._name);
     this._cardElement.querySelector(".card__name").textContent = this._name;
 
-    cardImage.addEventListener("click", openImagePopup);
+    // cardImage.addEventListener("click", openImagePopup);
     this._setLikeButtonHandler();
     this._setTrashButtonHandler();
 

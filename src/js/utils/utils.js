@@ -3,18 +3,6 @@ export function openPopup(popup) {
   document.addEventListener("keydown", handleEscapePopupBtn);
 }
 
-export function handleMouseClosePopup(evt) {
-  if (evt.target == evt.currentTarget) {
-    closeOpenedPopup();
-  }
-}
-
-export function handleEscapePopupBtn(evt) {
-  if (evt.key == "Escape") {
-    closeOpenedPopup();
-  }
-}
-
 function closeOpenedPopup() {
   const openedPopup = document.querySelector(".popup_opened");
   closePopup(openedPopup);
