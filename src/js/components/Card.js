@@ -1,10 +1,11 @@
 import { cardTemplate } from "../utils/domConst.js";
 
 export default class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, { handleCardClick }) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -16,14 +17,18 @@ export default class Card {
 
   createCard = () => {
     this._cardElement = this._getTemplate();
-    const cardImage = this._cardElement.querySelector(".card__image");
-    cardImage.setAttribute("src", this._link);
-    cardImage.setAttribute("alt", this._name);
+    this._cardImage = this._cardElement.querySelector(".card__image");
+    this._cardImageData = {
+      src: this._link,
+      alt: this._name
+    }
+    this._cardImage.setAttribute("src", this._cardImageData.src);
+    this._cardImage.setAttribute("alt", this._cardImageData.alt);
     this._cardElement.querySelector(".card__name").textContent = this._name;
 
-    // cardImage.addEventListener("click", openImagePopup);
     this._setLikeButtonHandler();
     this._setTrashButtonHandler();
+    this._handleCardClick(this._cardImage, this._cardImageData);
 
     return this._cardElement;
   }

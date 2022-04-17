@@ -45,18 +45,37 @@ export class PopupWithForm extends Popup {
     this._submitHandler = submitHandler;
   }
 
-  _getInputValue = () => {
-    this.popupSelector.querySelectorAll('.form__input').value;
-    return this._submitHandler;
+  _getInputsValue = () => {
+    this._formInputs = this.popupSelector.querySelectorAll('.form__input');
+    this.inputsValue = {
+      formInput1: this._formInputs[0].value,
+      formInput2: this._formInputs[1].value
+    };
+    return this.inputsValue;
   }
 
   setEventListener = () => {
-    this._formSubmitHandler.addEventListener("submit", this._getInputValue);
+    this.setEventListeners();
+    this.popupSelector.querySelector('.form').addEventListener('submit', (evt) => {
+      this.inputsData = this._getInputsValue();
+      this._submitHandler(evt, this.inputsData);
+    });
+  }
+
+  closePopup = () => {
+    this.closePopup();
+    this.popupSelector.querySelector('.form').reset();
   }
 }
 
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
+  }
+
+  openPopup = (cardImageData) => {
+    this.openPopup();
+    this.popupSelector.querySelector('.popup__image').src = cardImageData.link;
+    this.popupSelector.querySelector('.popup__name').textContent = cardImageData.name;
   }
 }

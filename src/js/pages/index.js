@@ -26,93 +26,67 @@ import {
   formList,
   titleInput,
   urlInput,
-  cards
+  cards,
 } from "../utils/domConst.js";
-
-const PopupWithAddPlaceForm = new PopupWithForm(addPlacePopup, { submitHandler: new Card(addPlaceData, ".card").createCard });
-const PopupWithEditProfileForm = new PopupWithForm(editProfilePopup, settings.formSelector);
-
-addPlaceButton.addEventListener("click", () => {
-  PopupWithAddPlaceForm.openPopup();
-});
-
-editProfileButton.addEventListener("click", () => {
-  PopupWithEditProfileForm.openPopup();
-});
-
-
-
-
-const cardSection = new Section({
-  items: initialCards,
-  renderer: (cardData) => {
-    const card = new Card(cardData, ".card");
-    card.createCard();
-  },
-  cards
-});
-
-cardSection.addItem();
-
 
 const profileFormValidator = new FormValidator(settings, editProfileForm);
 const cardFormValidator = new FormValidator(settings, addPlaceForm);
 
 
+const newCardsSection = new Section(
+  {
+    items: initialCards,
+    renderer: (cardData) => {
+      const card = new Card(cardData, ".card", {
+        handleCardClick: (cardImage, cardImageData) => {
+          cardImage.addEventListener("click", () => {
+            const PopupWithImageView = new PopupWithImage(imagePopup);
+            PopupWithImageView.openPopup(cardImageData);
+          });
+        },
+      });
+      card.createCard();
+      cards.prepend(card.createCard());
+    },
+  },
+  cards
+);
 
+const PopupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
+  submitHandler: (evt, data) => {
+    evt.preventDefault();
 
+    const card = new Card(cardData, ".card");
+    const cardElement = card.createCard();
+    newCardsSection.addItem(cardElement);
+    PopupWithAddPlaceForm.closePopup();
+    addPlaceForm.reset();
+  },
+});
 
+const PopupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
+  submitHandler: (evt, inputsData) => {
+    evt.preventDefault();
+    profileName.textContent = inputsData.formInput1;
+    aboutMe.textContent = inputsData.formInput2;
+    PopupWithEditProfileForm.closePopup();
+    editProfileForm.reset();
+  },
+});
 
-// popupList.forEach((popupElement) => {
-//   popupElement.addEventListener("mousedown", handleMouseClosePopup);
-// });
+addPlaceButton.addEventListener("click", () => {
+  PopupWithAddPlaceForm.openPopup();
+  cardFormValidator.enableValidation();
+  PopupWithAddPlaceForm.setEventListener();
+});
 
-// closePopupButtonList.forEach((closePopupButton) => {
-//   closePopupButton.addEventListener("click", function () {
-//     const popup = closePopupButton.closest(".popup");
-//     closePopup(popup);
-//   });
-// });
+editProfileButton.addEventListener("click", () => {
+  const userInfo = new UserInfo(profileName, aboutMe);
+  PopupWithEditProfileForm.openPopup();
+  nameInput.value = userInfo.getUserInfo().name;
+  jobInput.value = userInfo.getUserInfo().job;
+  profileFormValidator.enableValidation();
+  PopupWithEditProfileForm.setEventListener();
+});
 
-// export function openImagePopup(evt) {
-//   const imageUrl = evt.target.getAttribute("src");
-//   const imageAlt = evt.target.getAttribute("alt");
-//   const titleCard = evt.target.parentElement.querySelector(".card__name");
-//   const name = titleCard.textContent;
-//   cardPreviewImage.setAttribute("src", imageUrl);
-//   cardPreviewImage.setAttribute("alt", imageAlt);
-//   openPopup(imagePopup);
-//   cardPreviewTitle.textContent = name;
-// }
-
-// editProfileButton.addEventListener("click", function () {
-//   openPopup(editProfilePopup);
-//   fillProfileForm();
-//   profileFormValidator.toggleButtonState();
-// });
-
-// function fillProfileForm() {
-//   nameInput.value = profileName.textContent;
-//   jobInput.value = aboutMe.textContent;
-// }
-
-// editProfileForm.addEventListener("submit", handleSubmittedProfile);
-
-// function handleSubmittedProfile() {
-//   profileName.textContent = nameInput.value;
-//   aboutMe.textContent = jobInput.value;
-//   closePopup(editProfilePopup);
-// }
-
-// addPlaceForm.addEventListener("submit", handleSubmittedAddPlace);
-
-// function handleSubmittedAddPlace() {
-
-
-//   addPlaceForm.reset();
-//   cardFormValidator.toggleButtonState();
-//   closePopup(addPlacePopup);
-// }
-
-profileFormValidator.enableValidation();
-cardFormValidator.enableValidation();
+newCardsSection.renderer();
