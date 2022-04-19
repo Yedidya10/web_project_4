@@ -4,7 +4,7 @@
   position: absolute;
   right: 15px;
   top: 18px;
-  background-image: url("../../../../images/Trash.svg");
+  background-image: url("../../../images/Trash.svg");
   background-repeat: no-repeat;
   background-position: center;
   transition:  .3s ease;

@@ -1,11 +1,11 @@
-import "../../css/pages/index.css";
+import "../pages/index.css";
 
-import Section from "../components/Section.js";
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js";
-import UserInfo from "../components/UserInfo.js";
-import { PopupWithForm, PopupWithImage } from "../components/Popup.js";
-import { initialCards } from "../utils/data/cards.js";
+import Section from "../js/components/Section.js";
+import Card from "../js/components/Card.js";
+import FormValidator from "../js/components/FormValidator.js";
+import UserInfo from "../js/components/UserInfo.js";
+import { PopupWithForm, PopupWithImage } from "../js/components/Popup.js";
+import { initialCards } from "../js/utils/data/cards.js";
 import {
   settings,
   popupList,
@@ -27,7 +27,7 @@ import {
   titleInput,
   urlInput,
   cards,
-} from "../utils/domConst.js";
+} from "../js/utils/domConst.js";
 
 const profileFormValidator = new FormValidator(settings, editProfileForm);
 const cardFormValidator = new FormValidator(settings, addPlaceForm);
@@ -41,7 +41,7 @@ const newCardsSection = new Section(
         handleCardClick: (cardImage, cardImageData) => {
           cardImage.addEventListener("click", () => {
             const PopupWithImageView = new PopupWithImage(imagePopup);
-            PopupWithImageView.openPopup(cardImageData);
+            PopupWithImageView.openImagePopup(cardImageData);
           });
         },
       });
@@ -53,14 +53,27 @@ const newCardsSection = new Section(
 );
 
 const PopupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
-  submitHandler: (evt, data) => {
+  submitHandler: (evt, inputsData) => {
     evt.preventDefault();
-
-    const card = new Card(cardData, ".card");
+    const data = () => {
+      inputsData['name'] = inputsData['formInput1'];
+      delete data['formInput1'];
+      inputsData['link'] = inputsData['formInput2'];
+      delete data['formInput2'];
+      return inputsData;
+    };
+    const cardData = data();
+    const card = new Card(cardData, ".card", {
+      handleCardClick: (cardImage, cardImageData) => {
+        cardImage.addEventListener("click", () => {
+          const PopupWithImageView = new PopupWithImage(imagePopup);
+          PopupWithImageView.openImagePopup(cardImageData);
+        });
+      },
+    });
     const cardElement = card.createCard();
     newCardsSection.addItem(cardElement);
-    PopupWithAddPlaceForm.closePopup();
-    addPlaceForm.reset();
+    PopupWithAddPlaceForm.closeFormPopup();
   },
 });
 
@@ -70,7 +83,6 @@ const PopupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
     profileName.textContent = inputsData.formInput1;
     aboutMe.textContent = inputsData.formInput2;
     PopupWithEditProfileForm.closePopup();
-    editProfileForm.reset();
   },
 });
 
