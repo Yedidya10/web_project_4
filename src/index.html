@@ -8,13 +8,13 @@
   </head>
   <body class="page">
     <header class="header">
-      <img class="logo" src="./images/logo.svg" alt="logo: Around The U.S." />
+      <img class="logo" src="<%=require('./images/logo.svg')%>" alt="logo: Around The U.S." />
     </header>
     <main class="content">
       <section class="profile">
         <img
           class="profile__image"
-          src="./images/profile-image.jpg"
+          src="<%=require('./images/profile-image.jpg')%>"
           alt="profile image"
         />
         <div class="profile__info">
@@ -27,7 +27,7 @@
           >
             <img
               class="profile__edit-icon"
-              src="./images/edit-icon.svg"
+              src="<%=require('./images/edit-icon.svg')%>"
               alt="edit icon"
             />
           </button>
@@ -37,7 +37,7 @@
           type="button"
           class="button popup-button profile__add-card"
         >
-          <img src="./images/x-icon.svg" alt="add" />
+          <img src="<%=require('./images/x-icon.svg')%>" alt="add" />
         </button>
       </section>
       <section>
@@ -71,7 +71,7 @@
         <button aria-label="close" type="button" class="button popup__close">
           <img
             class="popup__close-icon"
-            src="./images/x-icon.svg"
+            src="<%=require('./images/x-icon.svg')%>"
             alt="close"
           />
         </button>
