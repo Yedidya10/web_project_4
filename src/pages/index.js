@@ -10,7 +10,6 @@ import PopupWithImage from "../components/popup/PopupWithImage.js";
 import { initialCards } from "../utils/data/cards.js";
 import {
   settings,
-  popupList,
   imagePopup,
   editProfileButton,
   editProfileForm,
@@ -22,10 +21,6 @@ import {
   addPlaceButton,
   addPlacePopup,
   addPlaceForm,
-  addPlaceData,
-  formList,
-  titleInput,
-  urlInput,
   cards,
   cardTemplate,
 } from "../utils/domConst.js";

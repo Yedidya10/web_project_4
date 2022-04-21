@@ -18,9 +18,6 @@ export const jobInput = editProfileForm.querySelector("#about-me");
 export const addPlaceButton = document.querySelector(".profile__add-card");
 export const addPlacePopup = document.querySelector("#add-place-popup");
 export const addPlaceForm = document.querySelector("#add-place-form");
-export const urlInput = addPlaceForm.querySelector("#img-url");
-export const titleInput = addPlaceForm.querySelector("#title");
 export const imagePopup = document.querySelector("#image-popup");
-
 export const cardTemplate = document.querySelector("#card-template").content;
 export const cards = document.querySelector(".cards");
