@@ -11,8 +11,6 @@ export const editProfileButton = document.querySelector(".profile__edit");
 export const editProfilePopup = document.querySelector("#edit-profile-popup");
 export const editProfileForm =
   editProfilePopup.querySelector("#edit-profile-form");
-export const profileName = document.querySelector(".profile__name");
-export const aboutMe = document.querySelector(".profile__about-me");
 export const nameInput = editProfileForm.querySelector("#name");
 export const jobInput = editProfileForm.querySelector("#about-me");
 export const addPlaceButton = document.querySelector(".profile__add-card");
@@ -20,4 +18,3 @@ export const addPlacePopup = document.querySelector("#add-place-popup");
 export const addPlaceForm = document.querySelector("#add-place-form");
 export const imagePopup = document.querySelector("#image-popup");
 export const cardTemplate = document.querySelector("#card-template").content;
-export const cards = document.querySelector(".cards");

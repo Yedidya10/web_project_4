@@ -16,16 +16,13 @@ import {
   editProfilePopup,
   nameInput,
   jobInput,
-  profileName,
-  aboutMe,
   addPlaceButton,
   addPlacePopup,
   addPlaceForm,
-  cards,
   cardTemplate,
 } from "../utils/domConst.js";
 
-const userInfo = new UserInfo(profileName, aboutMe);
+const userInfo = new UserInfo();
 const profileFormValidator = new FormValidator(settings, editProfileForm);
 profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(settings, addPlaceForm);
@@ -48,8 +45,7 @@ const newCardsSection = new Section(
       const cardElement = createCard(cardData);
       newCardsSection.addItem(cardElement);
     },
-  },
-  cards
+  }
 );
 newCardsSection.renderItems();
 
@@ -82,7 +78,7 @@ addPlaceButton.addEventListener("click", () => {
 });
 
 editProfileButton.addEventListener("click", () => {
-  const userInfo = new UserInfo(profileName, aboutMe);
+  const userInfo = new UserInfo();
   popupWithEditProfileForm.openPopup();
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().job;
