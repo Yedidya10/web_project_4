@@ -1,4 +1,4 @@
-export class Popup {
+export default class Popup {
   constructor(popupSelector) {
     this.popupSelector = popupSelector;
   }
@@ -55,10 +55,9 @@ export class PopupWithForm extends Popup {
   }
 
   setEventListener = () => {
-    this.setEventListeners();
-    this.popupSelector.querySelector('.form').addEventListener('submit', (evt) => {
+    this.popupSelector.querySelector('.form').addEventListener('submit', () => {
       this._inputsData = this._getInputsValue();
-      this._submitHandler(evt, this._inputsData);
+      this._submitHandler(this._inputsData);
     });
   }
 

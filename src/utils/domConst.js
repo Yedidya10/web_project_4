@@ -20,13 +20,7 @@ export const addPlacePopup = document.querySelector("#add-place-popup");
 export const addPlaceForm = document.querySelector("#add-place-form");
 export const urlInput = addPlaceForm.querySelector("#img-url");
 export const titleInput = addPlaceForm.querySelector("#title");
-export const addPlaceData = {
-  name: titleInput.value,
-  link: urlInput.value
-};
 export const imagePopup = document.querySelector("#image-popup");
-export const cardPreviewImage = imagePopup.querySelector(".popup__image");
-export const cardPreviewTitle = imagePopup.querySelector(".popup__name");
 
 export const cardTemplate = document.querySelector("#card-template").content;
 export const cards = document.querySelector(".cards");

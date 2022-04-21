@@ -46,9 +46,20 @@ module.exports = {
         ],
       },
       {
-        // rule for processing files
-        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
-        type: "asset/resource"
+        // rule for processing images files
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        type: 'asset/resource',
+        generator: {
+            filename: 'images/[name].[hash][ext]',
+        }
+      },
+      {
+        // rule for processing fonts files
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[hash][ext]',
+        }
       },
     ]
   },
