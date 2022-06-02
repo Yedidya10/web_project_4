@@ -14,25 +14,26 @@ import {
   editProfileButton,
   editProfileForm,
   editProfilePopup,
+  userName,
+  userJob,
   nameInput,
   jobInput,
   addPlaceButton,
   addPlacePopup,
   addPlaceForm,
-  cardTemplate,
 } from "../utils/domConst.js";
 
-const userInfo = new UserInfo();
+const popupWithImageView = new PopupWithImage(imagePopup);
+const userInfo = new UserInfo(userName, userJob);
 const profileFormValidator = new FormValidator(settings, editProfileForm);
 profileFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(settings, addPlaceForm);
 cardFormValidator.enableValidation();
 
 const createCard = (cardData) => {
-  const card = new Card(cardData, cardTemplate, {
+  const card = new Card(cardData, {
     handleCardClick: (cardImageData) => {
-      const popupWithImageView = new PopupWithImage(imagePopup);
-      popupWithImageView.openImagePopup(cardImageData);
+      popupWithImageView.open(cardImageData);
     },
   });
   return card.createCard();
@@ -60,26 +61,26 @@ const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
     };
     const cardData = createDataObj();
     newCardsSection.addItem(createCard(cardData));
-    popupWithAddPlaceForm.closeFormPopup();
+    popupWithAddPlaceForm.close();
   },
 });
-popupWithAddPlaceForm.setEventListener();
+popupWithAddPlaceForm.setEventListeners();
 
 const popupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
   submitHandler: (inputsData) => {
     userInfo.setUserInfo(inputsData);
-    popupWithEditProfileForm.closePopup();
+    popupWithEditProfileForm.close();
   },
 });
-popupWithEditProfileForm.setEventListener();
+popupWithEditProfileForm.setEventListeners();
 
 addPlaceButton.addEventListener("click", () => {
-  popupWithAddPlaceForm.openPopup();
+  popupWithAddPlaceForm.open();
+  cardFormValidator.toggleButtonState();
 });
 
 editProfileButton.addEventListener("click", () => {
-  const userInfo = new UserInfo();
-  popupWithEditProfileForm.openPopup();
+  popupWithEditProfileForm.open();
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().job;
   profileFormValidator.toggleButtonState();
