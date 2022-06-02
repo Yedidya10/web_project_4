@@ -33,7 +33,7 @@ cardFormValidator.enableValidation();
 const createCard = (cardData) => {
   const card = new Card(cardData, {
     handleCardClick: (cardImageData) => {
-      popupWithImageView.open(cardImageData);
+      popupWithImageView.openPopup(cardImageData);
     },
   });
   return card.createCard();
@@ -50,6 +50,7 @@ const newCardsSection = new Section(
 );
 newCardsSection.renderItems();
 
+
 const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
   submitHandler: (inputsData) => {
     const createDataObj = () => {
@@ -60,28 +61,32 @@ const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
       return inputsData;
     };
     const cardData = createDataObj();
-    newCardsSection.addItem(createCard(cardData));
-    popupWithAddPlaceForm.close();
+    const cardElement = createCard(cardData);
+    newCardsSection.addItem(cardElement);
+    popupWithAddPlaceForm.closePopup();
   },
 });
+
+// newCardSection.addItem(cardElement);
 popupWithAddPlaceForm.setEventListeners();
 
 const popupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
   submitHandler: (inputsData) => {
     userInfo.setUserInfo(inputsData);
-    popupWithEditProfileForm.close();
+    popupWithEditProfileForm.closePopup();
   },
 });
 popupWithEditProfileForm.setEventListeners();
 
 addPlaceButton.addEventListener("click", () => {
-  popupWithAddPlaceForm.open();
+  popupWithAddPlaceForm.openPopup();
   cardFormValidator.toggleButtonState();
 });
 
 editProfileButton.addEventListener("click", () => {
-  popupWithEditProfileForm.open();
+  popupWithEditProfileForm.openPopup();
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().job;
   profileFormValidator.toggleButtonState();
 });
+

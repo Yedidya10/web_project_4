@@ -11,7 +11,7 @@ export default class Card {
     return cardTemplate;
   }
 
-  createCard = () => {
+  createCard() {
     this._cardElement = this._getCardTemplate();
     const cardImage = this._cardElement.querySelector(".card__image");
     const cardImageData = {
@@ -29,13 +29,13 @@ export default class Card {
     return this._cardElement;
   }
 
-  _sethandleCardClick = (cardImage, cardImageData) => {
+  _sethandleCardClick (cardImage, cardImageData) {
     cardImage.addEventListener("click", () => {
       this._handleCardClick(cardImageData);
     });
   }
 
-  _handleLike = (evt) => {
+  _handleLike(evt) {
     evt.target.classList.toggle("card__like_active");
   };
 
@@ -44,7 +44,7 @@ export default class Card {
     cardLike.addEventListener("click", this._handleLike);
   }
 
-  _handleDelete = () => {
+  _handleDelete() {
     this._cardElement.remove();
     this._cardElement = null;
   };
