@@ -10,9 +10,9 @@ export default class UserInfo {
       job: this._userJob.textContent,
     };
   };
-
+  
   setUserInfo = (inputsData) => {
-    this._userName.textContent = inputsData.formInput1;
-    this._userJob.textContent = inputsData.formInput2;
+    this._userName.textContent = inputsData.name;
+    this._userJob.textContent = inputsData.job;
   };
 }

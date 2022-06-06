@@ -24,12 +24,12 @@ export default class Card {
 
     this._setLikeButtonHandler();
     this._setTrashButtonHandler();
-    this._sethandleCardClick(cardImage, cardImageData);
+    this._setHandleCardClick(cardImage, cardImageData);
 
     return this._cardElement;
   }
 
-  _sethandleCardClick (cardImage, cardImageData) {
+  _setHandleCardClick (cardImage, cardImageData) {
     cardImage.addEventListener("click", () => {
       this._handleCardClick(cardImageData);
     });
@@ -44,7 +44,7 @@ export default class Card {
     cardLike.addEventListener("click", this._handleLike);
   }
 
-  _handleDelete() {
+  _handleDelete = () => {
     this._cardElement.remove();
     this._cardElement = null;
   };

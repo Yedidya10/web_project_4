@@ -23,7 +23,6 @@ import {
   addPlaceForm,
 } from "../utils/domConst.js";
 
-const popupWithImageView = new PopupWithImage(imagePopup);
 const userInfo = new UserInfo(userName, userJob);
 const profileFormValidator = new FormValidator(settings, editProfileForm);
 profileFormValidator.enableValidation();
@@ -33,7 +32,9 @@ cardFormValidator.enableValidation();
 const createCard = (cardData) => {
   const card = new Card(cardData, {
     handleCardClick: (cardImageData) => {
+      const popupWithImageView = new PopupWithImage(imagePopup);
       popupWithImageView.openPopup(cardImageData);
+      popupWithImageView.setEventListeners();
     },
   });
   return card.createCard();
@@ -46,37 +47,33 @@ const newCardsSection = new Section(
       const cardElement = createCard(cardData);
       newCardsSection.addItem(cardElement);
     },
-  }
+  },
+  ".cards"
 );
 newCardsSection.renderItems();
 
-
 const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
-  submitHandler: (inputsData) => {
-    const createDataObj = () => {
-      inputsData["name"] = inputsData["formInput1"];
-      delete inputsData["formInput1"];
-      inputsData["link"] = inputsData["formInput2"];
-      delete inputsData["formInput2"];
-      return inputsData;
+  handleSubmit: (inputsValues) => {
+    const cardData = {
+      name: inputsValues.title,
+      link: inputsValues.url,
     };
-    const cardData = createDataObj();
     const cardElement = createCard(cardData);
     newCardsSection.addItem(cardElement);
     popupWithAddPlaceForm.closePopup();
   },
 });
 
-// newCardSection.addItem(cardElement);
-popupWithAddPlaceForm.setEventListeners();
-
 const popupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
-  submitHandler: (inputsData) => {
-    userInfo.setUserInfo(inputsData);
+  handleSubmit: (inputsValues) => {
+    const userInfoData = {
+      name: inputsValues.name,
+      job: inputsValues.about,
+    };
+    userInfo.setUserInfo(userInfoData);
     popupWithEditProfileForm.closePopup();
   },
 });
-popupWithEditProfileForm.setEventListeners();
 
 addPlaceButton.addEventListener("click", () => {
   popupWithAddPlaceForm.openPopup();
@@ -85,8 +82,11 @@ addPlaceButton.addEventListener("click", () => {
 
 editProfileButton.addEventListener("click", () => {
   popupWithEditProfileForm.openPopup();
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().job;
+  const fillProfileForm = () => {
+    const { name, job } = userInfo.getUserInfo();
+    nameInput.value = name;
+    jobInput.value = job;
+  };
+  fillProfileForm();
   profileFormValidator.toggleButtonState();
 });
-
