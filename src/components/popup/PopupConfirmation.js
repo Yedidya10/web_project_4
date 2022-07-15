@@ -1,22 +1,13 @@
 import Popup from "./Popup";
 
-export default class PopupWithForm extends Popup {
+export default class PopupConfirmation extends Popup {
   constructor(popup, { handleSubmit }) {
     super(popup);
     this._handleSubmit = handleSubmit;
   }
 
-  _getInputsValue = () => {
-    const inputsValues = {};
-    const formInputs = this.popup.querySelectorAll('.form__input');
-    for (const input of formInputs) {
-      inputsValues[input.name] = input.value;
-    }
-    return inputsValues;
-  };
-
-  _handleSubmitListener = () => {
-    this._handleSubmit(this._getInputsValue());
+  _handleSubmitListener = (evt) => {
+    this._handleSubmit(evt);
   };
 
   setEventListeners = () => {
@@ -32,6 +23,5 @@ export default class PopupWithForm extends Popup {
   closePopup = () => {
     super.closePopup();
     this.removeEventListeners();
-    this.popup.querySelector(".form").reset();
   };
 }

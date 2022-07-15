@@ -1,9 +1,13 @@
 export default class Card {
-  constructor(data, { handleCardClick }) {
+  constructor(data, { handleImageCardClick, handleTrashButtonClick, handleLikeButtonClick }) {
+    this._cardId = data._id;
     this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
+    this._handleImageCardClick = handleImageCardClick;
+    this._handleTrashButtonClick = handleTrashButtonClick;
+    this._handleLikeButtonClick = handleLikeButtonClick;
     this._cardSelector = document.querySelector("#card-template").content;
-    this._handleCardClick = handleCardClick;
   }
 
   _getCardTemplate() {
@@ -11,7 +15,7 @@ export default class Card {
     return cardTemplate;
   }
 
-  createCard() {
+  createCard = () => {
     this._cardElement = this._getCardTemplate();
     const cardImage = this._cardElement.querySelector(".card__image");
     const cardImageData = {
@@ -24,33 +28,27 @@ export default class Card {
 
     this._setLikeButtonHandler();
     this._setTrashButtonHandler();
-    this._setHandleCardClick(cardImage, cardImageData);
+    this._setHandleImageCardClick(cardImage, cardImageData);
 
     return this._cardElement;
   }
 
-  _setHandleCardClick (cardImage, cardImageData) {
+  _setHandleImageCardClick (cardImage, cardImageData) {
     cardImage.addEventListener("click", () => {
-      this._handleCardClick(cardImageData);
+      this._handleImageCardClick(cardImageData);
     });
   }
 
-  _handleLike(evt) {
-    evt.target.classList.toggle("card__like_active");
-  };
-
   _setLikeButtonHandler() {
     const cardLike = this._cardElement.querySelector(".card__like");
-    cardLike.addEventListener("click", this._handleLike);
+    const likesAmount = this._cardElement.querySelector('.card__likes-amount');
+    cardLike.addEventListener("click", (evt) => {
+      this._handleLikeButtonClick(evt, this._likes, this._cardId, likesAmount);
+    })
   }
-
-  _handleDelete = () => {
-    this._cardElement.remove();
-    this._cardElement = null;
-  };
 
   _setTrashButtonHandler() {
     const trashButton = this._cardElement.querySelector(".card__trash");
-    trashButton.addEventListener("click", this._handleDelete);
+    trashButton.addEventListener("click", this._handleTrashButtonClick(trashButton, this._cardId, this._cardElement));
   }
 }

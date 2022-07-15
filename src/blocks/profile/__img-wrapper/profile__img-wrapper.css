@@ -1,0 +1,12 @@
+.profile__img-wrapper {
+  position: relative;
+  height: 120px;
+  width: 120px;
+}
+
+
+
+.profile__img-wrapper:hover .profile__img-overlay {
+  opacity: 1;
+}
+

@@ -16,14 +16,19 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img
-          class="profile__image"
-          src="<%=require('./images/profile-image.jpg')%>"
-          alt="profile image"
-        />
+        <div class="profile__img-wrapper">
+          <img class="profile__image" src="" alt="profile image" />
+          <div class="profile__img-overlay">
+            <img
+              class="profile__edit-img"
+              src="<%=require('./images/edit-icon.svg')%>"
+              alt="edit-icon"
+            />
+          </div>
+        </div>
         <div class="profile__info">
-          <h1 class="profile__name">Jacques Cousteau</h1>
-          <p class="profile__about-me">Explorer</p>
+          <h1 class="profile__name"></h1>
+          <p class="profile__about-me"></p>
           <button
             aria-label="Edit Profile"
             type="button"
@@ -56,11 +61,14 @@
               <img class="card__image" />
               <div class="card__details">
                 <h2 class="card__name"></h2>
-                <button
-                  aria-label="Like"
-                  type="button"
-                  class="button card__like"
-                ></button>
+                <div class="card__like-wrapper">
+                  <button
+                    aria-label="Like"
+                    type="button"
+                    class="button card__like"
+                  ></button>
+                  <span class="card__likes-amount"></span>
+                </div>
               </div>
             </li>
           </template>
@@ -129,20 +137,20 @@
             type="text"
             name="title"
             placeholder="Title"
-            minlength="1"
+            minlength="2"
             maxlength="30"
             required
           />
           <span class="form__input-error title-error"></span>
           <input
-            id="img-url"
+            id="card-img-url"
             class="form__input"
             type="url"
             name="url"
             placeholder="Image link"
             required
           />
-          <span class="form__input-error img-url-error"></span>
+          <span class="form__input-error card-img-url-error"></span>
           <button class="button form__submit" name="submit">Create</button>
         </form>
       </div>
@@ -160,6 +168,55 @@
           <img class="popup__image" />
           <p class="popup__name"></p>
         </div>
+      </div>
+    </div>
+    <div id="delete-card-popup" class="popup">
+      <div class="popup__container">
+        <button aria-label="close" type="button" class="button popup__close">
+          <img
+            class="popup__close-icon"
+            src="<%=require('./images/x-icon.svg')%>"
+            alt="close"
+          />
+        </button>
+        <form
+          name="delete-card-form"
+          id="delete-card-form"
+          class="form"
+          novalidate
+        >
+          <h2 class="form__title">Are you sure?</h2>
+          <button class="button form__submit" name="submit">Yes</button>
+        </form>
+      </div>
+    </div>
+    <div id="edit-profile-pic-popup" class="popup">
+      <div class="popup__container">
+        <button aria-label="close" type="button" class="button popup__close">
+          <img
+            class="popup__close-icon"
+            src="<%=require('./images/x-icon.svg')%>"
+            alt="close"
+          />
+        </button>
+        <form
+          name="edit-profile-pic-form"
+          id="edit-profile-pic-form"
+          class="form"
+          novalidate
+        >
+          <h2 class="form__title">Change profile picture</h2>
+          <input
+            id="profile-pic-url"
+            class="form__input"
+            type="url"
+            name="url"
+            placeholder="Image link"
+            required
+          />
+          <span class="form__input-error profile-pic-url-error"></span>
+          <button class="button form__submit" name="submit">Save</button>
+        </form>
       </div>
     </div>
   </body>
