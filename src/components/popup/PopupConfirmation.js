@@ -22,6 +22,5 @@ export default class PopupConfirmation extends Popup {
 
   closePopup = () => {
     super.closePopup();
-    this.removeEventListeners();
   };
 }

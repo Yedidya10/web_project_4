@@ -6,9 +6,10 @@ export default class PopupWithImage extends Popup {
   }
 
   openPopup = (cardImageData) => {
+    const imagePopup = this.popup.querySelector(".popup__image");
     super.openPopup();
-    this.popup.querySelector(".popup__image").src = cardImageData.src;
-    this.popup.querySelector(".popup__image").alt = cardImageData.alt;
+    imagePopup.src = cardImageData.src;
+    imagePopup.alt = cardImageData.alt;
     this.popup.querySelector(".popup__name").textContent = cardImageData.alt;
   };
 }

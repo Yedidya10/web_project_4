@@ -30,7 +30,4 @@ export const addPlacePopup = document.querySelector("#add-place-popup");
 export const addPlaceForm = document.querySelector("#add-place-form");
 
 export const deleteCardPopup = document.querySelector("#delete-card-popup");
-
-//API
-export const apiUrl = 'https://around.nomoreparties.co/v1/cohort-3-en';
-export const apiAuth = '55231eda-cfe8-472e-9c18-93282af161bd';
+export const deleteCardForm = deleteCardPopup.querySelector(".form");
