@@ -8,8 +8,6 @@ export const settings = {
 };
 
 export const userName = document.querySelector(".profile__name");
-export const userAbout = document.querySelector(".profile__about-me");
-export const userAvatar = document.querySelector(".profile__image");
 
 export const profileEditImgBtn = document.querySelector(".profile__edit-img");
 export const imagePopup = document.querySelector("#image-popup");

@@ -1,6 +1,8 @@
 export default class Card {
-  constructor(data, { handleImageCardClick, handleTrashButtonClick, handleLikeButtonClick }) {
+  constructor(data, userId, { handleImageCardClick, handleTrashButtonClick, handleLikeButtonClick }) {
     this._cardId = data._id;
+    this._cardOwner = data.owner._id;
+    this._userId = userId;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -23,6 +25,10 @@ export default class Card {
       src: this._link,
       alt: this._name
     }
+    this._trashBin = this._cardElement.querySelector('.card__trash');
+    const likesAmount = this._cardElement.querySelector('.card__likes-amount');
+    likesAmount.textContent = this._likes.length;
+
     cardImage.setAttribute("src", cardImageData.src);
     cardImage.setAttribute("alt", cardImageData.alt);
     cardName.textContent = this._name;
@@ -30,9 +36,31 @@ export default class Card {
     this._setLikeButtonHandler();
     this._setTrashButtonHandler();
     this._setHandleImageCardClick(cardImage, cardImageData);
+    this._renderLikes()
 
     return this._cardElement;
   }
+
+  updateLikes(likes) {
+    this._likes = likes;
+    this._renderLikes();
+  }
+
+  isLiked() {
+    return this._likes.some(like => like._id === this._userId);
+  }
+
+   _renderLikes() {
+    const likesAmount = this._cardElement.querySelector('.card__likes-amount');
+    likesAmount.textContent = this._likes.length;
+
+    if (this.isLiked()) {
+      this._cardElement.querySelector('.card__like').classList.add('card__like_active');
+    } else {
+      this._cardElement.querySelector('.card__like').classList.remove('card__like_active');
+    }
+   }
+
 
   _setHandleImageCardClick (cardImage, cardImageData) {
     cardImage.addEventListener("click", () => {
@@ -49,7 +77,9 @@ export default class Card {
   }
 
   _setTrashButtonHandler() {
-    const trashButton = this._cardElement.querySelector(".card__trash");
-    trashButton.addEventListener("click", this._handleTrashButtonClick(trashButton, this._cardId, this._cardElement));
+    if (this._cardOwner === this._userId) {
+      this._trashBin.classList.add('card__trash_active');
+      this._trashBin.addEventListener("click", this._handleTrashButtonClick(this._trashBin, this._cardId, this._cardElement));
+    }
   }
 }

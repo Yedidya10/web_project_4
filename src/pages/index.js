@@ -16,8 +16,6 @@ import {
   editProfileForm,
   editProfilePopup,
   userName,
-  userAbout,
-  userAvatar,
   nameInput,
   aboutInput,
   profileEditImgBtn,
@@ -29,8 +27,11 @@ import {
   deleteCardPopup,
   deleteCardForm
 } from "../utils/constants.js";
-import { data } from "autoprefixer";
 
+let userId;
+
+const userInfo = new UserInfo('.profile__name', '.profile__about-me', '.profile__image');
+const newCardSection = new Section(".cards");
 
 // Getting elements info from the server
 const api = new Api({
@@ -43,42 +44,26 @@ const api = new Api({
 
 window.addEventListener('load', () => {
   // Getting user
-api.getUser('users/me')
-.then((data) => {
-  userName.textContent = data.name;
-  userAbout.textContent = data.about;
-  userAvatar.src = data.avatar;
-  userName.setAttribute('id', data._id);
-})
-.catch((error) => {
-  console.log(`Getting user return a ${error}`);
-})
+  api.getUser()
+  .then((data) => {
+    userId = data._id;
+    userInfo.setUserInfo(data, userId);
+    userInfo.setUserPic(data.avatar);
+  })
+  .catch((error) => {
+    console.log(`Getting user return a ${error}`);
+  });
 
   // Getting cards
-  api.getCards('cards')
+  api.getCards()
   .then((data) => {
-    const newCardsSection = new Section(
-      {
-        items: data,
-        renderer: (cardData) => {
-          const cardElement = createCard(cardData);
-          const trashBin = cardElement.querySelector('.card__trash');
-          const likesAmount = cardElement.querySelector('.card__likes-amount');
-
-          if (cardData.owner._id === userName.id) {
-            trashBin.classList.add('card__trash_active');
-          }
-          likesAmount.textContent = cardData.likes.length;
-          newCardsSection.addItem(cardElement);
-        },
-      },
-      ".cards"
-    );
-    newCardsSection.renderItems();
+    data.forEach((cardData) => {
+      newCardSection.addItem(createCard(cardData, userId));
+    });
   })
   .catch((error) => {
     console.log(`Getting cards return a ${error}`);
-  })
+  });
 });
 
 
@@ -92,39 +77,39 @@ editProfilePicFormValidator.enableValidation();
 
 
 // Edit Profile
-const userInfo = new UserInfo(userName, userAbout, userAvatar);
+const fillProfileForm = () => {
+  const { name, about } = userInfo.getUserInfo();
+  nameInput.value = name;
+  aboutInput.value = about;
+};
 
 editProfileButton.addEventListener("click", () => {
   editProfileForm.submit.textContent = "Save";
   popupWithEditProfileForm.openPopup();
-  const fillProfileForm = () => {
-    const { name, about } = userInfo.getUserInfo();
-    nameInput.value = name;
-    aboutInput.value = about;
-  };
   fillProfileForm();
   editProfileFormValidator.toggleButtonState();
 })
 
 const popupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
   handleSubmit: (inputsValues) => {
-    editProfileForm.submit.textContent = "Saving...";
     const userInfoInputs = {
       name: inputsValues.name,
       about: inputsValues.about,
     };
-    api.updateProfile('users/me', userInfoInputs)
+    popupWithEditProfileForm.showLoading();
+    api.updateProfileText(userInfoInputs)
     .then((data) => {
-      userName.textContent = data.name;
-      userAbout.textContent = data.about;
+      userInfo.setUserInfo(data);
+      popupWithEditProfileForm.closePopup();
     })
     .catch((error) => {
       console.log(`Getting user return a ${error}`);
     })
     .finally(() => {
-      popupWithEditProfileForm.closePopup();
+      popupWithEditProfileForm.hideLoading();
     });
   },
+  loadingButtonText: "Saving..."
 });
 
 profileEditImgBtn.addEventListener("click", () => {
@@ -135,46 +120,43 @@ profileEditImgBtn.addEventListener("click", () => {
 
 const popupWithEditProfilePicForm = new PopupWithForm(editProfilePicPopup, {
   handleSubmit: (inputValue) => {
-    editProfilePicForm.submit.textContent = "Saving...";
     const userPicInput = {
       avatar: inputValue.url
     };
-    api.updateProfile('users/me/avatar', userPicInput)
+    popupWithEditProfilePicForm.showLoading();
+    api.updateProfilePic(userPicInput)
     .then((data) => {
-      userAvatar.src = data.avatar;
+      const { avatar } = data;
+      userInfo.setUserPic(avatar);
+      popupWithEditProfilePicForm.closePopup();
     })
     .catch((error) => {
       console.log(`Getting user return a ${error}`);
     })
     .finally(() => {
-      popupWithEditProfilePicForm.closePopup();
+      popupWithEditProfilePicForm.hideLoading();
     });
   },
+  loadingButtonText: "Saving..."
 });
 
 
 // Adding a card
 const popupWithImageView = new PopupWithImage(imagePopup);
 
-const newCardSection = new Section(
-  {},
-  ".cards"
-);
-
 addPlaceButton.addEventListener("click", () => {
-  addPlaceForm.submit.textContent = "Create";
   popupWithAddPlaceForm.openPopup();
   addPlaceFormValidator.toggleButtonState();
 });
 
 const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
   handleSubmit: (inputsValues) => {
-    addPlaceForm.submit.textContent = "Saving...";
     const cardData = {
       name: inputsValues.title,
       link: inputsValues.url
     };
-    api.createCard('cards', cardData)
+    popupWithAddPlaceForm.showLoading();
+    api.createCard(cardData)
     .then((data) => {
       const cardElement = createCard(data);
       const trashBin = cardElement.querySelector('.card__trash');
@@ -182,56 +164,61 @@ const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
         trashBin.classList.add('card__trash_active');
       }
       newCardSection.addItem(cardElement);
+      popupWithAddPlaceForm.closePopup();
     })
     .catch((error) => {
       console.log(`Adding card return a ${error}`);
     })
     .finally(() => {
-      popupWithAddPlaceForm.closePopup();
+      popupWithAddPlaceForm.hideLoading();
     });
   },
+  loadingButtonText: "Saving..."
 });
 
-const createCard = (cardData) => {
-  const card = new Card(cardData, {
+const popupConfirmDeletCard = new PopupConfirmation(deleteCardPopup, {
+  handleSubmit: (evt) => {
+    evt.preventDefault();
+  }
+});
+
+const createCard = (cardData, userId) => {
+  const card = new Card(cardData, userId, {
     handleImageCardClick: (cardImageData) => {
       popupWithImageView.openPopup(cardImageData);
       popupWithImageView.setEventListeners();
     },
     handleTrashButtonClick: (trashButton, cardId, cardElement) => {
-      const popupConfirmDeletCard = new PopupConfirmation(deleteCardPopup, {
-        handleSubmit: (evt) => {
-          deleteCardForm.submit.textContent = "Saving...";
-          evt.preventDefault();
-          api.deleteCard(`cards/${cardId}`)
-          .catch((error) => {
-            console.log(`Deletion card return a ${error}`);
-          })
-          .finally(() => {
-            cardElement.remove();
-            cardElement = null;
-            popupConfirmDeletCard.closePopup();
-          });
-        }
+      popupConfirmDeletCard.setAction(() => {
+        api.deleteCard(cardId)
+        .then(() => {
+          cardElement.remove();
+          cardElement = null;
+          popupConfirmDeletCard.closePopup();
+        })
+        .catch((error) => {
+          console.log(`Deletion card return a ${error}`);
+        });
       });
       trashButton.addEventListener("click", () => {
-        deleteCardForm.submit.textContent = "Yes";
         popupConfirmDeletCard.openPopup();
         popupConfirmDeletCard.setEventListeners();
       });
     },
-    handleLikeButtonClick: (evt, cardId, likesAmount) => {
-      const likeActive = evt.target.classList.toggle("card__like_active");
-      if (likeActive) {
-        api.addLike(`cards/likes/${cardId}`)
-        .then((data) => {
-          likesAmount.textContent = data.likes.length;
-        })
+    handleLikeButtonClick: (evt, cardId) => {
+      evt.target.classList.toggle("card__like_active");
+      if (card.isLiked()) {
+        api.deleteLike(cardId)
+        .then(response => card.updateLikes(response.likes))
+        .catch((error) => {
+          console.log(`Deletion card return a ${error}`);
+        });
       } else {
-        api.deleteLike(`cards/likes/${cardId}`)
-        .then((data) => {
-          likesAmount.textContent = data.likes.length;
-        })
+        api.addLike(cardId)
+        .then(response => card.updateLikes(response.likes))
+        .catch((error) => {
+          console.log(`Deletion card return a ${error}`);
+        });
       }
     }
   });

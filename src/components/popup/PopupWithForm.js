@@ -1,9 +1,12 @@
 import Popup from "./Popup";
 
 export default class PopupWithForm extends Popup {
-  constructor(popup, { handleSubmit }) {
+  constructor(popup, { handleSubmit, loadingButtonText }) {
     super(popup);
     this._handleSubmit = handleSubmit;
+    this._submitButton = this.popup.querySelector('.form__submit');
+    this._buttonText = this._submitButton.textContent;
+    this._loadingButtonText = loadingButtonText;
   }
 
   _getInputsValues = () => {
@@ -29,9 +32,16 @@ export default class PopupWithForm extends Popup {
     this.popup.querySelector(".form").removeEventListener("submit", this._handleSubmitListener);
   };
 
+  showLoading() {
+    this._submitButton.textContent = this._loadingButtonText;
+  }
+
+  hideLoading() {
+    this._submitButton.textContent = this._buttonText;
+  }
+
   closePopup = () => {
     super.closePopup();
-    this.removeEventListeners();
     this.popup.querySelector(".form").reset();
-  };
+  }
 }

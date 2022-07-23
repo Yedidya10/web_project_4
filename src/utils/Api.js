@@ -11,24 +11,24 @@ export default class Api {
     return res.json();
   }
 
-  getCards(continuedLink) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  getCards() {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
       headers: this._headers
     })
     .then((res) => this._getResponseData(res))
   }
 
-  getUser(continuedLink) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  getUser() {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: this._headers
     })
     .then((res) => this._getResponseData(res))
   }
 
-  createCard(continuedLink, cardData) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  createCard(cardData) {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(cardData)
@@ -36,32 +36,41 @@ export default class Api {
     .then((res) => this._getResponseData(res))
   }
 
-  addLike(continuedLink) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  addLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers
     })
     .then((res) => this._getResponseData(res))
   }
 
-  deleteLike(continuedLink) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  deleteLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
     .then((res) => this._getResponseData(res))
   }
 
-  deleteCard(continuedLink) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
     .then((res) => this._getResponseData(res))
   }
 
-  updateProfile(continuedLink, userData) {
-    return fetch(`${this._baseUrl}/${continuedLink}`, {
+  updateProfileText(userData) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(userData)
+    })
+    .then((res) => this._getResponseData(res))
+  }
+
+  updateProfilePic(userData) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(userData)

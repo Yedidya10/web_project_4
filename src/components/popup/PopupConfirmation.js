@@ -6,7 +6,12 @@ export default class PopupConfirmation extends Popup {
     this._handleSubmit = handleSubmit;
   }
 
+  setAction(action) {
+    this._handleSubmit = action;
+  }
+
   _handleSubmitListener = (evt) => {
+    evt.preventDefault();
     this._handleSubmit(evt);
   };
 
@@ -18,9 +23,5 @@ export default class PopupConfirmation extends Popup {
   removeEventListeners = () => {
     super.removeEventListeners();
     this.popup.querySelector(".form").removeEventListener("submit", this._handleSubmitListener);
-  };
-
-  closePopup = () => {
-    super.closePopup();
   };
 }
