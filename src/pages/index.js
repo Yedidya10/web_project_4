@@ -15,7 +15,6 @@ import {
   editProfileButton,
   editProfileForm,
   editProfilePopup,
-  userName,
   nameInput,
   aboutInput,
   profileEditImgBtn,
@@ -24,14 +23,13 @@ import {
   addPlaceButton,
   addPlacePopup,
   addPlaceForm,
-  deleteCardPopup,
-  deleteCardForm
+  deleteCardPopup
 } from "../utils/constants.js";
 
 let userId;
 
 const userInfo = new UserInfo('.profile__name', '.profile__about-me', '.profile__image');
-const newCardSection = new Section(".cards");
+const cardSection = new Section(".cards");
 
 // Getting elements info from the server
 const api = new Api({
@@ -56,10 +54,14 @@ window.addEventListener('load', () => {
 
   // Getting cards
   api.getCards()
-  .then((data) => {
-    data.forEach((cardData) => {
-      newCardSection.addItem(createCard(cardData, userId));
-    });
+  Promise.all([api.getUser(), api.getCards()])
+  .then(([userData, cardsData]) => {
+    userId = userData._id;
+    userInfo.setUserInfo(userData);
+    userInfo.setUserPic(userData.avatar);
+    cardsData.forEach((cardData) => {
+      cardSection.addItem(createCard(cardData, userId));
+    })
   })
   .catch((error) => {
     console.log(`Getting cards return a ${error}`);
@@ -84,7 +86,6 @@ const fillProfileForm = () => {
 };
 
 editProfileButton.addEventListener("click", () => {
-  editProfileForm.submit.textContent = "Save";
   popupWithEditProfileForm.openPopup();
   fillProfileForm();
   editProfileFormValidator.toggleButtonState();
@@ -113,7 +114,6 @@ const popupWithEditProfileForm = new PopupWithForm(editProfilePopup, {
 });
 
 profileEditImgBtn.addEventListener("click", () => {
-  editProfilePicForm.submit.textContent = "Save";
   popupWithEditProfilePicForm.openPopup();
   editProfilePicFormValidator.toggleButtonState();
 });
@@ -159,11 +159,10 @@ const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
     api.createCard(cardData)
     .then((data) => {
       const cardElement = createCard(data);
-      const trashBin = cardElement.querySelector('.card__trash');
-      if (data.owner._id === userName.id) {
-        trashBin.classList.add('card__trash_active');
+      if (data.owner._id === userId) {
+        cardElement.querySelector('.card__trash').classList.add('card__trash_active');
       }
-      newCardSection.addItem(cardElement);
+      cardSection.addItem(cardElement);
       popupWithAddPlaceForm.closePopup();
     })
     .catch((error) => {
@@ -176,11 +175,7 @@ const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
   loadingButtonText: "Saving..."
 });
 
-const popupConfirmDeletCard = new PopupConfirmation(deleteCardPopup, {
-  handleSubmit: (evt) => {
-    evt.preventDefault();
-  }
-});
+const popupConfirmDeleteCard = new PopupConfirmation(deleteCardPopup , { loadingButtonText: "Saving..." });
 
 const createCard = (cardData, userId) => {
   const card = new Card(cardData, userId, {
@@ -188,25 +183,24 @@ const createCard = (cardData, userId) => {
       popupWithImageView.openPopup(cardImageData);
       popupWithImageView.setEventListeners();
     },
-    handleTrashButtonClick: (trashButton, cardId, cardElement) => {
-      popupConfirmDeletCard.setAction(() => {
+    handleTrashButtonClick: (cardId) => {
+      popupConfirmDeleteCard.setAction(() => {
+        popupConfirmDeleteCard.showLoading();
         api.deleteCard(cardId)
         .then(() => {
-          cardElement.remove();
-          cardElement = null;
-          popupConfirmDeletCard.closePopup();
+          card.removeCard();
+          popupConfirmDeleteCard.closePopup();
         })
         .catch((error) => {
           console.log(`Deletion card return a ${error}`);
+        })
+        .finally(() => {
+          popupConfirmDeleteCard.hideLoading();
         });
       });
-      trashButton.addEventListener("click", () => {
-        popupConfirmDeletCard.openPopup();
-        popupConfirmDeletCard.setEventListeners();
-      });
+      popupConfirmDeleteCard.openPopup();
     },
-    handleLikeButtonClick: (evt, cardId) => {
-      evt.target.classList.toggle("card__like_active");
+    handleLikeButtonClick: (cardId) => {
       if (card.isLiked()) {
         api.deleteLike(cardId)
         .then(response => card.updateLikes(response.likes))

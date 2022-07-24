@@ -1,9 +1,11 @@
 import Popup from "./Popup";
 
 export default class PopupConfirmation extends Popup {
-  constructor(popup, { handleSubmit }) {
+  constructor(popup, { loadingButtonText }) {
     super(popup);
-    this._handleSubmit = handleSubmit;
+    this._submitButton = this.popup.querySelector('.form__submit');
+    this._buttonText = this._submitButton.textContent;
+    this._loadingButtonText = loadingButtonText;
   }
 
   setAction(action) {
@@ -12,7 +14,7 @@ export default class PopupConfirmation extends Popup {
 
   _handleSubmitListener = (evt) => {
     evt.preventDefault();
-    this._handleSubmit(evt);
+    this._handleSubmit();
   };
 
   setEventListeners = () => {
@@ -24,4 +26,12 @@ export default class PopupConfirmation extends Popup {
     super.removeEventListeners();
     this.popup.querySelector(".form").removeEventListener("submit", this._handleSubmitListener);
   };
+
+  showLoading() {
+    this._submitButton.textContent = this._loadingButtonText;
+  }
+
+  hideLoading() {
+    this._submitButton.textContent = this._buttonText;
+  }
 }

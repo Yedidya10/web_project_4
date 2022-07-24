@@ -25,18 +25,18 @@ export default class Card {
       src: this._link,
       alt: this._name
     }
+
     this._trashBin = this._cardElement.querySelector('.card__trash');
-    const likesAmount = this._cardElement.querySelector('.card__likes-amount');
-    likesAmount.textContent = this._likes.length;
 
     cardImage.setAttribute("src", cardImageData.src);
     cardImage.setAttribute("alt", cardImageData.alt);
     cardName.textContent = this._name;
 
+    this._renderLikes();
     this._setLikeButtonHandler();
     this._setTrashButtonHandler();
     this._setHandleImageCardClick(cardImage, cardImageData);
-    this._renderLikes()
+
 
     return this._cardElement;
   }
@@ -61,6 +61,10 @@ export default class Card {
     }
    }
 
+   removeCard = () => {
+    this._cardElement.remove();
+    this._cardElement = null;
+  }
 
   _setHandleImageCardClick (cardImage, cardImageData) {
     cardImage.addEventListener("click", () => {
@@ -70,16 +74,12 @@ export default class Card {
 
   _setLikeButtonHandler() {
     const cardLike = this._cardElement.querySelector(".card__like");
-    const likesAmount = this._cardElement.querySelector('.card__likes-amount');
-    cardLike.addEventListener("click", (evt) => {
-      this._handleLikeButtonClick(evt, this._cardId, likesAmount);
+    cardLike.addEventListener("click", () => {
+      this._handleLikeButtonClick(this._cardId);
     })
   }
 
   _setTrashButtonHandler() {
-    if (this._cardOwner === this._userId) {
-      this._trashBin.classList.add('card__trash_active');
-      this._trashBin.addEventListener("click", this._handleTrashButtonClick(this._trashBin, this._cardId, this._cardElement));
-    }
+    this._trashBin.addEventListener("click", () => this._handleTrashButtonClick(this._cardId));
   }
 }

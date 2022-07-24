@@ -7,8 +7,6 @@ export const settings = {
   errorClass: "form__input-error_active",
 };
 
-export const userName = document.querySelector(".profile__name");
-
 export const profileEditImgBtn = document.querySelector(".profile__edit-img");
 export const imagePopup = document.querySelector("#image-popup");
 
@@ -28,4 +26,3 @@ export const addPlacePopup = document.querySelector("#add-place-popup");
 export const addPlaceForm = document.querySelector("#add-place-form");
 
 export const deleteCardPopup = document.querySelector("#delete-card-popup");
-export const deleteCardForm = deleteCardPopup.querySelector(".form");
