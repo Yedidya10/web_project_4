@@ -41,19 +41,6 @@ const api = new Api({
 });
 
 window.addEventListener('load', () => {
-  // Getting user
-  api.getUser()
-  .then((data) => {
-    userId = data._id;
-    userInfo.setUserInfo(data, userId);
-    userInfo.setUserPic(data.avatar);
-  })
-  .catch((error) => {
-    console.log(`Getting user return a ${error}`);
-  });
-
-  // Getting cards
-  api.getCards()
   Promise.all([api.getUser(), api.getCards()])
   .then(([userData, cardsData]) => {
     userId = userData._id;
