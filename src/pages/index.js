@@ -146,9 +146,6 @@ const popupWithAddPlaceForm = new PopupWithForm(addPlacePopup, {
     api.createCard(cardData)
     .then((data) => {
       const cardElement = createCard(data);
-      if (data.owner._id === userId) {
-        cardElement.querySelector('.card__trash').classList.add('card__trash_active');
-      }
       cardSection.addItem(cardElement);
       popupWithAddPlaceForm.closePopup();
     })

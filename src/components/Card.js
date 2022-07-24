@@ -3,7 +3,6 @@ export default class Card {
     this._cardId = data._id;
     this._cardOwner = data.owner._id;
     this._userId = userId;
-    this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._handleImageCardClick = handleImageCardClick;
@@ -26,17 +25,19 @@ export default class Card {
       alt: this._name
     }
 
-    this._trashBin = this._cardElement.querySelector('.card__trash');
-
     cardImage.setAttribute("src", cardImageData.src);
     cardImage.setAttribute("alt", cardImageData.alt);
     cardName.textContent = this._name;
 
     this._renderLikes();
     this._setLikeButtonHandler();
+
+    this._trashBin = this._cardElement.querySelector('.card__trash');
+    if (this._cardOwner === this._userId) {
+      this._trashBin.classList.add('card__trash_active');
+    }
     this._setTrashButtonHandler();
     this._setHandleImageCardClick(cardImage, cardImageData);
-
 
     return this._cardElement;
   }
